@@ -1,67 +1,64 @@
-# Evaluación de Laboratorio T1
+# Sistema de Gestión de Libros
 
-## Desarrollo de Servicios Web I
+Aplicación web para administrar el catálogo de libros de una biblioteca. Permite mantener los datos de cada libro y encontrar registros por nombre de autor.
 
-**Estudiante:** Willian Roy Canazas Rosas · **Tecnologías:** ASP.NET Core MVC, .NET 9, SQL Server y ADO.NET
+## Funcionalidades
 
-### Presentación
+- Registrar, listar, editar y eliminar libros.
+- Buscar autores por coincidencia parcial.
+- Validar los campos obligatorios antes de guardar.
+- Confirmar la eliminación y mostrar mensajes de resultado.
 
-Profesor, en este proyecto desarrollé una aplicación web para mantener el catálogo de libros de la base de datos `BDBIBLIOTECA2026`. La aplicación permite registrar, listar, editar y eliminar libros, además de buscar por coincidencias parciales del nombre del autor.
+## Tecnologías
 
-## Funciones implementadas
+- ASP.NET Core MVC con .NET 9
+- SQL Server
+- ADO.NET con `Microsoft.Data.SqlClient`
+- Procedimientos almacenados
 
-- CRUD de libros con validación de los campos obligatorios.
-- Búsqueda por autor mediante `LIKE`.
-- Confirmación antes de eliminar un registro.
-- Mensajes para indicar el resultado de las operaciones.
-- Acceso a SQL Server con `Microsoft.Data.SqlClient` y procedimientos almacenados.
+## Configuración
 
-## Cómo ejecutar el proyecto
+1. Ejecuta [`SQL/01_BaseDatosYProcedimientos.sql`](SQL/01_BaseDatosYProcedimientos.sql) en SQL Server Management Studio para preparar la base de datos `BDBIBLIOTECA2026`.
+2. Revisa `DefaultConnection` en `appsettings.json` y ajústala al nombre de tu instancia.
 
-### 1. Preparar la base de datos
-
-Ejecuta [`SQL/01_BaseDatosYProcedimientos.sql`](SQL/01_BaseDatosYProcedimientos.sql) en SQL Server Management Studio. El script crea la base `BDBIBLIOTECA2026`, la tabla `dbo.Libros` y los procedimientos almacenados utilizados por la aplicación.
-
-### 2. Revisar la conexión
-
-En `appsettings.json` dejé configurada una conexión para LocalDB de Windows:
+La cadena incluida está preparada para LocalDB en Windows:
 
 ```text
 Server=(localdb)\MSSQLLocalDB;Database=BDBIBLIOTECA2026;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True
 ```
 
-Si la instancia es SQL Server Express, cambia el servidor por `Server=.\SQLEXPRESS`. Si utilizas autenticación de SQL Server, actualiza la cadena con los datos de tu instancia.
+Para SQL Server Express puedes usar `Server=.\SQLEXPRESS`. Si tu instancia usa autenticación de SQL Server, configura ahí las credenciales correspondientes.
 
-### 3. Iniciar la aplicación
+## Ejecución
 
-Abre una terminal en la carpeta del proyecto y ejecuta:
+Desde la carpeta del proyecto, ejecuta:
 
 ```bash
 dotnet restore
 dotnet run
 ```
 
-Luego ingresa en el navegador a la dirección local que aparece en la terminal.
+Abre en el navegador la dirección local que muestra la terminal.
 
 ## Procedimientos almacenados
 
-| Procedimiento | Operación |
+| Procedimiento | Función |
 | --- | --- |
-| `usp_ListarLibros` | Muestra el catálogo completo. |
-| `usp_ObtenerLibroPorId` | Busca un libro para cargar el formulario de edición. |
-| `usp_RegistrarLibro` | Registra un libro nuevo. |
-| `usp_ActualizarLibro` | Guarda los cambios de un libro. |
-| `usp_EliminarLibro` | Elimina un libro según su identificador. |
-| `usp_ListarLibrosPorAutor` | Consulta autores con coincidencia parcial. |
+| `usp_ListarLibros` | Lista los libros registrados. |
+| `usp_ObtenerLibroPorId` | Obtiene un libro para editarlo. |
+| `usp_RegistrarLibro` | Registra un libro. |
+| `usp_ActualizarLibro` | Actualiza los datos de un libro. |
+| `usp_EliminarLibro` | Elimina un libro por su identificador. |
+| `usp_ListarLibrosPorAutor` | Busca libros por autor usando coincidencias parciales. |
 
-## Organización del proyecto
+## Organización
 
-- `Controllers`: acciones para listar, buscar, registrar, editar y eliminar.
-- `Data`: conexión ADO.NET y ejecución de procedimientos almacenados.
-- `Models`: modelo `Libro` y reglas de validación.
-- `SQL`: script de creación de la base de datos y procedimientos.
-- `Views/Libro`: páginas del listado y los formularios.
+- `Controllers`: acciones para las páginas y operaciones del catálogo.
+- `Data`: conexión a SQL Server y ejecución de procedimientos.
+- `Models`: modelo `Libro` y validaciones.
+- `SQL`: script de la base de datos y procedimientos almacenados.
+- `Views/Libro`: listado y formularios.
 
-## Observación
+## Autor
 
-El enunciado menciona una categoría, pero el esquema proporcionado para `dbo.Libros` no define una columna, tabla ni relación de categorías. Por ese motivo, mantuve los campos indicados en el script: `Id`, `NombreLibro`, `Autor`, `NombreEditorial` e `ISDN`.
+Willian Roy Canazas Rosas
