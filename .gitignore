@@ -1,0 +1,20 @@
+# Compilación y paquetes restaurables
+bin/
+obj/
+
+# Visual Studio y editores
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs y artefactos locales
+*.log
+*.tmp
