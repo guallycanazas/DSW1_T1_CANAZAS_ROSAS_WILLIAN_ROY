@@ -1,79 +1,67 @@
-<div align="center">
+# Evaluación de Laboratorio T1
 
-# 📚 Biblioteca Cibertec
+## Desarrollo de Servicios Web I
 
-### Evaluación de Laboratorio T1 · Desarrollo de Servicios Web I
+**Estudiante:** Willian Roy Canazas Rosas · **Tecnologías:** ASP.NET Core MVC, .NET 9, SQL Server y ADO.NET
 
-Aplicación web para administrar libros y consultar el catálogo por autor.
+### Presentación
 
-**ASP.NET Core MVC · .NET 9 · SQL Server · ADO.NET**
+Profesor, en este proyecto desarrollé una aplicación web para mantener el catálogo de libros de la base de datos `BDBIBLIOTECA2026`. La aplicación permite registrar, listar, editar y eliminar libros, además de buscar por coincidencias parciales del nombre del autor.
 
-</div>
+## Funciones implementadas
 
----
+- CRUD de libros con validación de los campos obligatorios.
+- Búsqueda por autor mediante `LIKE`.
+- Confirmación antes de eliminar un registro.
+- Mensajes para indicar el resultado de las operaciones.
+- Acceso a SQL Server con `Microsoft.Data.SqlClient` y procedimientos almacenados.
 
-## ¿Qué incluye?
+## Cómo ejecutar el proyecto
 
-- Registro, listado, edición y eliminación de libros.
-- Búsqueda por coincidencia parcial del nombre del autor.
-- Validación de los cuatro campos requeridos.
-- Confirmación antes de eliminar y mensajes de resultado.
-- Acceso a datos con `Microsoft.Data.SqlClient` y procedimientos almacenados.
+### 1. Preparar la base de datos
 
-## Puesta en marcha
+Ejecuta [`SQL/01_BaseDatosYProcedimientos.sql`](SQL/01_BaseDatosYProcedimientos.sql) en SQL Server Management Studio. El script crea la base `BDBIBLIOTECA2026`, la tabla `dbo.Libros` y los procedimientos almacenados utilizados por la aplicación.
 
-### 1. Crear la base de datos
+### 2. Revisar la conexión
 
-En SQL Server Management Studio, ejecuta [`SQL/01_BaseDatosYProcedimientos.sql`](SQL/01_BaseDatosYProcedimientos.sql). El script crea `BDBIBLIOTECA2026` si aún no existe, define `dbo.Libros` y crea todos los procedimientos que utiliza la aplicación.
-
-### 2. Configurar SQL Server
-
-La cadena inicial de `appsettings.json` utiliza LocalDB de Windows:
+En `appsettings.json` dejé configurada una conexión para LocalDB de Windows:
 
 ```text
 Server=(localdb)\MSSQLLocalDB;Database=BDBIBLIOTECA2026;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True
 ```
 
-Si usas SQL Server Express, cambia el servidor a `Server=.\SQLEXPRESS`. Para autenticación de SQL Server, configura el usuario y la contraseña de tu instancia en `DefaultConnection`.
+Si la instancia es SQL Server Express, cambia el servidor por `Server=.\SQLEXPRESS`. Si utilizas autenticación de SQL Server, actualiza la cadena con los datos de tu instancia.
 
-### 3. Ejecutar el sitio
+### 3. Iniciar la aplicación
 
-Desde esta carpeta, ejecuta:
+Abre una terminal en la carpeta del proyecto y ejecuta:
 
 ```bash
 dotnet restore
 dotnet run
 ```
 
-Abre en el navegador la dirección local que muestra la terminal. La pantalla inicial lleva al catálogo de libros.
+Luego ingresa en el navegador a la dirección local que aparece en la terminal.
 
 ## Procedimientos almacenados
 
-| Procedimiento | Uso |
+| Procedimiento | Operación |
 | --- | --- |
-| `usp_ListarLibros` | Lista todos los libros. |
-| `usp_ObtenerLibroPorId` | Recupera un libro para editarlo. |
-| `usp_RegistrarLibro` | Inserta un libro y devuelve su código. |
-| `usp_ActualizarLibro` | Actualiza los datos de un libro. |
-| `usp_EliminarLibro` | Elimina el libro indicado por su código. |
-| `usp_ListarLibrosPorAutor` | Busca autores con `LIKE` y coincidencia parcial. |
+| `usp_ListarLibros` | Muestra el catálogo completo. |
+| `usp_ObtenerLibroPorId` | Busca un libro para cargar el formulario de edición. |
+| `usp_RegistrarLibro` | Registra un libro nuevo. |
+| `usp_ActualizarLibro` | Guarda los cambios de un libro. |
+| `usp_EliminarLibro` | Elimina un libro según su identificador. |
+| `usp_ListarLibrosPorAutor` | Consulta autores con coincidencia parcial. |
 
-## Estructura
+## Organización del proyecto
 
-```text
-Controllers/    Acciones MVC para el catálogo y los formularios
-Data/           Consultas ADO.NET a los procedimientos almacenados
-Models/         Modelo Libro y validaciones
-SQL/            Script de base de datos y procedimientos
-Views/Libro/    Listado, registro y edición
-wwwroot/        Estilos y recursos del sitio
-```
+- `Controllers`: acciones para listar, buscar, registrar, editar y eliminar.
+- `Data`: conexión ADO.NET y ejecución de procedimientos almacenados.
+- `Models`: modelo `Libro` y reglas de validación.
+- `SQL`: script de creación de la base de datos y procedimientos.
+- `Views/Libro`: páginas del listado y los formularios.
 
-## Sobre el esquema entregado
+## Observación
 
-El enunciado menciona una categoría, pero la definición de `dbo.Libros` solo incluye `Id`, `NombreLibro`, `Autor`, `NombreEditorial` e `ISDN`; no proporciona tabla ni relación de categorías. La aplicación sigue esa estructura para que coincida con el script entregado.
-
----
-
-**Autor:** Willian Roy Canazas Rosas  
-**Curso:** Desarrollo de Servicios Web I
+El enunciado menciona una categoría, pero el esquema proporcionado para `dbo.Libros` no define una columna, tabla ni relación de categorías. Por ese motivo, mantuve los campos indicados en el script: `Id`, `NombreLibro`, `Autor`, `NombreEditorial` e `ISDN`.
